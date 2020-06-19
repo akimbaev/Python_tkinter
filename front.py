@@ -19,7 +19,7 @@ class Main(tkinter.Frame):
     		username = lblusername.get()
     		password = lblpassword.get()
     		
-    		c.execute('SELECT * FROM users WHERE username = ? AND password = ?', (username, password))
+    		c.execute('SELECT * FROM Student WHERE username = ? AND password = ?', (username, password))
     		
     		if c.fetchall():
     			showinfo(title = "success", message = "Username and password correct")
@@ -56,28 +56,6 @@ if __name__ == "__main__":
     root.resizable(False, False)
 
     root.mainloop()
-# from tkinter import *
-# import random
-# import time
-
-# window=tkinter()
-# window.geometry("1600x700+0+0")
-# window.title("Library Hof")
-# Tops = Frame(window,bg="white",width = 1600,height=50,relief=SUNKEN)
-# Tops.pack(side=TOP)
-
-# f1 = Frame(window,width = 900,height=700,relief=SUNKEN)
-# f1.pack(side=LEFT)
-
-# f2 = Frame(window ,width = 400,height=700,relief=SUNKEN)
-# f2.pack(side=RIGHT)
-# #------------------TIME--------------
-# localtime=time.asctime(time.localtime(time.time()))
-# #-----------------INFO TOP------------
-# lblinfo = Label(Tops, font=( 'aria' ,30, 'bold' ),text="Library Hof",fg="black",bd=10,anchor='w')
-# lblinfo.grid(row=0,column=0)
-# lblinfo = Label(Tops, font=( 'aria' ,20, ),text=localtime,fg="black",anchor=W)
-# lblinfo.grid(row=1,column=0)
 
 # label1=Label(f1,text="Name of book")
 # label1.grid(row=0,column=0)
@@ -94,5 +72,3 @@ if __name__ == "__main__":
 # label5=Label(f1,text="Library5")
 # label5.grid(row=4,column=0)
 
-
-# window.mainloop()
