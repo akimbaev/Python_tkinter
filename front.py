@@ -10,7 +10,6 @@ class Main(tkinter.Frame):
     def __init__(self, root):
         super().__init__(root)
         self.init_main()
-
     def init_main(self):
     	def login():
     		# Connect to database
@@ -23,6 +22,14 @@ class Main(tkinter.Frame):
     		
     		if c.fetchall():
     			showinfo(title = "success", message = "Username and password correct")
+    			# self.destroy()
+    			self.destroy()
+    			from frontend import Window
+    			window = Tk()
+    			Window(window)
+    			# from subprocess import call
+    			# call(["python3 frontend.py"])
+    			
     		else:
     			showerror(title = "warning", message = "incorrect username or password")
     			
