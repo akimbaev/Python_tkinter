@@ -27,6 +27,7 @@ def open_dialog():
         window.destroy()
 
 
+
     def database():
         username=usr.get()
         password=ps.get()
@@ -56,13 +57,13 @@ def open_dialog():
     lblinfo.grid(row=0,column=0)
     #ENTRYFIELD FOR Username
     label1=Label(f1,text="Username")
-    label1.grid(row=0,column=0)
+    label1.grid(row=0, column=0)
     field1=Entry(f1,textvar=usr)
     field1.grid(row=0,column=1)
     #ENTRYFIELD FOR Password
     label2=Label(f1,text="Password")
-    label2.grid(row=1,column=0)
-    field2=Entry(f1,textvar=ps)
+    label2.grid(row=1,column=0)   
+    field2=Entry(f1,show="*")
     field2.grid(row=1,column=1)
     # #ENTRYFIELD FOR NAME
     label3=Label(f1,text="Name")
@@ -77,19 +78,33 @@ def open_dialog():
     # #ENTRYFIELD FOR CITY
     label5=Label(f1,text="City : ")
     label5.grid(row=4,column=0)
-    field5=Entry(f1,textvar=cit)
+    variable = StringVar(window)
+
+    CITIES = [ 
+        "Hof",
+        "Munich",
+        "Nurnberg",
+        "Bamberg"
+        ]        
+    variable.set(CITIES[0]) # default value
+    
+
+    field5 = OptionMenu(f1, variable, *CITIES)
     field5.grid(row=4,column=1)
-    # #ENTRY FIELD FOR GENDER
+    
+    
+    #ENTRY FIELD FOR GENDER
     gender=Label(f1,text="Gender: ", font=("Arial",14))
     gender.grid(row=5,column=0)
-    ch1=Radiobutton(f1,text="Male", variable=c1, value="Male").place(x=90, y=155)
-    ch2=Radiobutton(f1, text="Female", variable=c1, value="Female").place(x=150, y=155)
-    ch3=Radiobutton(f1, text="Others", variable=c1, value="Others").place(x=225, y=155)
-    # #ENTRYFIELD FOR CONTACT NO.
-    cont=Label(window,text="Contact No.:      +49 -  ", font=("Arial",14))
-    cont.place(x=18, y=300)
-    field6=Entry(window,textvar=num)
-    field6.place(x=170, y=300)
+    c1=StringVar()
+    ch1=Radiobutton(f1,text="Male", variable=c1, value=" ").grid(row=5, column=1, sticky="W")
+    ch2=Radiobutton(f1, text="Female", variable=c1, value=" ").grid(row=5, column=2, sticky="W")
+    ch3=Radiobutton(f1, text="Others", variable=c1, value="").grid(row=5, column=3, sticky="W")
+    #ENTRYFIELD FOR CONTACT NO.
+    cont=Label(f1,text="Contact No.:", font=("Arial",14))
+    cont.grid(row=6,column=0)
+    field6=Entry(f1,textvar=num)
+    field6.grid(row=6,column=1)
 
     #BUTTONS
     but1 = Button(window,text="SignUp", width=20, height=2, font=("Arial", 12), command=lambda: [printt(), database()])
@@ -106,3 +121,5 @@ if __name__ == "__main__":
     open_dialog()
 
 
+def change():
+    print("running change")
