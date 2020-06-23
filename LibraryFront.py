@@ -1,5 +1,5 @@
 from tkinter import *
-from backend import  Database
+from LibraryBackend import  Database
 
 database = Database("books.db")
 
@@ -105,10 +105,8 @@ class Window(object):
         database.update(self.selected_tuple[0],self.title_text.get(), self.author_text.get(), self.year_text.get(), self.ISBN_text.get())
         self.view_command()
 
-if __name__ == "__main__":
-    window = Tk()
-    Window(window)
-    window.mainloop()
 #code for the GUI (front end)
+window = Tk()
+Window(window)
 
-
+window.mainloop()

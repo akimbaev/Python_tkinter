@@ -5,7 +5,6 @@ from tkinter import *
 from tkinter import messagebox as ms
 from PIL import ImageTk, Image
 import sqlite3
-from frontend import Window
 with sqlite3.connect('quit.db') as db:
     c = db.cursor()
 
@@ -13,6 +12,10 @@ c.execute('CREATE TABLE IF NOT EXISTS user (username TEXT NOT NULL PRIMARY KEY,p
 db.commit()
 db.close()
 class main:
+    def open(file):
+        from subprocess import call
+        call([file])
+
     def __init__(self,master):
         self.n_username = StringVar()
         self.n_password = StringVar()
@@ -34,8 +37,24 @@ class main:
             self.logf.pack_forget()
             self.head['text'] = self.username.get() + '\n Enjoy your Time'
             self.head['pady'] = 150
-            window = Tk()
-            Window(window)
+            # from LibraryFront import Window
+            # tn=Button(root,command=equal)#root is the first windowname
+            # tn.pack()
+            # file="LibraryFront.py"
+            # execfile('LibraryFront.py')
+            # exec(open('LibraryFront.py').read())
+
+            # from subprocess import call
+            # call(["python3", "LibraryFront.py"])
+
+            import subprocess
+            subprocess.call(" python3 LibraryFront.py 1", shell=True)
+            # import tkinter.filedialog
+            # import os
+            # import sys
+            # pyexec = sys.executable
+            # PathPy = tkinter.filedialog.askopenfilename(title="Open a file",filetypes=[('PYTHON file','.py')])
+            # os.system('%s %s' % (pyexec, PathPy))
 
         else:
             ms.showerror('Oops!','Username Not Found.')
