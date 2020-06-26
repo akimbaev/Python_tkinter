@@ -76,12 +76,12 @@ class StartPage(tk.Frame):
     def To_library(self):
         # # self.master=master
         
-        # print("lol")
+        
         # from LibraryFront import Window
         # window = Tk()
         # Window(window)
         import subprocess
-        subprocess.call(" python3 LibraryFront.py 1", shell=True)
+        subprocess.call(" python LibraryFront.py 1", shell=True)
  
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent) 
