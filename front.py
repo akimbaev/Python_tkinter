@@ -12,14 +12,15 @@ c.execute('CREATE TABLE IF NOT EXISTS user (username TEXT NOT NULL PRIMARY KEY,p
 db.commit()
 db.close()
 class main:
+    
     def open(file):
         from subprocess import call
         call([file])
 
     def __init__(self,master):
+        self.master=master
         self.n_username = StringVar()
         self.n_password = StringVar()
-        self.master = master
         self.username = StringVar()
         self.password = StringVar()
         #Create Widgets
@@ -37,6 +38,8 @@ class main:
             self.logf.pack_forget()
             self.head['text'] = self.username.get() + '\n Enjoy your Time'
             self.head['pady'] = 150
+
+
             # from LibraryFront import Window
             # tn=Button(root,command=equal)#root is the first windowname
             # tn.pack()
@@ -44,11 +47,18 @@ class main:
             # execfile('LibraryFront.py')
             # exec(open('LibraryFront.py').read())
 
-            # from subprocess import call
-            # call(["python3", "LibraryFront.py"])
+            self.master.destroy()
+            
+            from HomeFront import tkinterApp
+            app=Tk()
+            tkinterApp(app) 
+            app.mainloop()
 
-            import subprocess
-            subprocess.call(" python3 LibraryFront.py 1", shell=True)
+
+            # import subprocess
+            # subprocess.call(" python3 HomeFront.py 1", shell=True)
+
+
             # import tkinter.filedialog
             # import os
             # import sys
@@ -59,8 +69,7 @@ class main:
         else:
             ms.showerror('Oops!','Username Not Found.')
             # showerror(title = "warning", message = "incorrect username or password")
-
-
+    
     def registration(self):
         #Establish Connection
         with sqlite3.connect('quit.db') as db:

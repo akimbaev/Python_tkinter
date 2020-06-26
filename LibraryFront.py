@@ -1,7 +1,22 @@
 from tkinter import *
 from LibraryBackend import  Database
 
+import tkinter as tk
+import tkinter.ttk as ttk
+import matplotlib
+matplotlib.use("TkAgg")
+
+# from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
+from matplotlib.figure import Figure
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+from matplotlib import style
+
+import sqlite3
 database = Database("books.db")
+# with sqlite3.connect('books.db') as conn:
+#     cur = conn.cursor()
+
 
 class Window(object):
     def __init__(self,window):
@@ -37,7 +52,7 @@ class Window(object):
         self.e4.grid(row=1, column=3)
 
         self.list1 = Listbox(window, height=6, width=35)
-        self.list1.grid(row=2, column=0, rowspan=6, columnspan=2)
+        self.list1.grid(row=2, column=0, rowspan=6, columnspan=2,padx=5)
 
         self.list1.bind('<<ListboxSelect>>', self.get_selected_row)
 
@@ -62,8 +77,72 @@ class Window(object):
         b5 = Button(window, text="Delete selected", width=12, command=self.delete_command)
         b5.grid(row=6, column=3)
 
-        b6 = Button(window, text="Close", width=12, command=window.destroy)
+        # b6 = Button(window, text="Top searched", width=12, command=self.animate)
+        # b6.grid(row=7, column=3)
+
+        b6 = Button(window, text="Top searched", width=12, command=self.animate)
         b6.grid(row=7, column=3)
+
+        b7 = Button(window, text="Close", width=12, command=window.destroy)
+        b7.grid(row=8, column=3)
+
+    def animate(self):
+        with sqlite3.connect('books.db') as conn:
+            cur = conn.cursor()
+        cur.execute("CREATE TABLE IF NOT EXISTS top_book (book_name VARCHAR(255), counter INTEGER)")
+        sql = "INSERT INTO top_book (book_name, counter) VALUES (%s, %d)"
+
+        val = [("new world", 21),
+                ("adventures", 15),              
+                ("hello", 13),
+                ("adventures2", 10),
+                ("adventures4", 35)
+               ]
+        cur.executemany('INSERT INTO top_book VALUES(?, ?)'.format(sql.replace('"', '""')), val)
+        
+        cur.execute("SELECT COUNT(DISTINCT book_name) FROM top_book;")
+        num_of_books = cur.fetchall()
+        dist_books = num_of_books[0][0]
+        #book_num = list(cursor.fetchall())
+        xs = []
+        x_book_name=[]
+        ys = []
+        cur.execute("SELECT book_name from top_book")
+
+        for i in range(dist_books):
+            xs.append(i+1)
+
+        for i in range(dist_books):
+            one_book=cur.fetchone()
+            x_book_name.append(one_book[0])
+
+        cur.execute("SELECT counter from top_book")
+        for i in range(dist_books):
+            one_book_occur=cur.fetchone()
+            ys.append(one_book_occur[0])
+
+
+        plt.figure(figsize=(9, 3))
+        plt.suptitle('Categorical Plotting')
+        plt.plot(x_book_name, ys)
+
+      #  ani = animation.FuncAnimation(fig, animate, interval=1000)  
+        conn.commit()
+        plt.show()
+
+
+        ####################3
+        # cursor = conn.cursor(MySQLdb.cursors.DictCursor)
+        # cursor.execute("SELECT name, category FROM animal")
+        # result_set = cursor.fetchall()
+        # for row in result_set:
+        # print "%s, %s" % (row["name"], row["category"])
+        ######################
+               
+
+
+
+
 
 
     def get_selected_row(self,event):   #the "event" parameter is needed b/c we've binded this function to the listbox
@@ -107,6 +186,7 @@ class Window(object):
 
 #code for the GUI (front end)
 window = Tk()
+window.geometry("580x210")
 Window(window)
 
 window.mainloop()
