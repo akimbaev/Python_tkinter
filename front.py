@@ -40,35 +40,26 @@ class main:
             self.head['pady'] = 150
 
 
-            # from LibraryFront import Window
-            # tn=Button(root,command=equal)#root is the first windowname
-            # tn.pack()
-            # file="LibraryFront.py"
-            # execfile('LibraryFront.py')
-            # exec(open('LibraryFront.py').read())
+           
 
             self.master.destroy()
+            f = open('helloworld.txt','w')
+            name1=self.username.get()
+            f.write(name1)
+            f.close()
             
             from HomeFront import tkinterApp
-            app=Tk()
-            tkinterApp(app) 
-            app.mainloop()
+            # app=Tk()
+            # tkinterApp(app,self,username.get()) 
+            # app.mainloop()
 
 
             # import subprocess
             # subprocess.call(" python3 HomeFront.py 1", shell=True)
 
 
-            # import tkinter.filedialog
-            # import os
-            # import sys
-            # pyexec = sys.executable
-            # PathPy = tkinter.filedialog.askopenfilename(title="Open a file",filetypes=[('PYTHON file','.py')])
-            # os.system('%s %s' % (pyexec, PathPy))
-
         else:
             ms.showerror('Oops!','Username Not Found.')
-            # showerror(title = "warning", message = "incorrect username or password")
     
     def registration(self):
         #Establish Connection
